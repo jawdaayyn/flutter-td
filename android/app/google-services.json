@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "992535071966",
+    "firebase_url": "https://flexcart-fa4cf-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "flexcart-fa4cf",
+    "storage_bucket": "flexcart-fa4cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:992535071966:android:a6fb575adbd0479ff9464f",
+        "android_client_info": {
+          "package_name": "com.example.isspi_bd3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "992535071966-b0s5g4usnj395e5h2678ulskamiir4gg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANUeOR3_i4LfgjhZ43fZmbFNRzjlZIAl0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "992535071966-b0s5g4usnj395e5h2678ulskamiir4gg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
