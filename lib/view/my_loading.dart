@@ -34,8 +34,6 @@ class _MyLoadingState extends State<MyLoading> {
                   controller: pageController,
                   children: [
                     Lottie.asset("assets/01.json"),
-                    Lottie.asset("assets/02.json"),
-                    Lottie.asset("assets/03.json"),
                     const MyHomePage(title: "dshfjs")
                   ],
                 ),

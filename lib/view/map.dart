@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+// ignore: must_be_immutable
 class MyMap extends StatefulWidget {
   Position maPostion;
   MyMap({required this.maPostion, super.key});
@@ -19,7 +20,6 @@ class _MyMapState extends State<MyMap> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     initCamera = CameraPosition(
         target: LatLng(widget.maPostion.latitude, widget.maPostion.longitude),

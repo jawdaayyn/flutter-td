@@ -1,13 +1,16 @@
+import 'dart:ffi';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:isspi_bd3/model/message.dart';
 import 'package:isspi_bd3/model/my_user.dart';
 
 class MyFirebaseHelper {
   final auth = FirebaseAuth.instance;
   final cloudUsers = FirebaseFirestore.instance.collection("UTILISATEURS");
+  final messages = FirebaseFirestore.instance.collection("MESSAGES");
   final storage = FirebaseStorage.instance;
 
   //creer un utilisateur
@@ -41,6 +44,31 @@ class MyFirebaseHelper {
   Future<MyUser> getUser(String uid) async {
     DocumentSnapshot snapshot = await cloudUsers.doc(uid).get();
     return MyUser(snapshot);
+  }
+
+//recupérer les messages de l'utilisateur
+  Future<List<Message>> getMessages(String uid) async {
+    QuerySnapshot receiverSnaps = // query must be receiver is equal to uid
+        await messages.where("receiver", isEqualTo: uid).get();
+
+    QuerySnapshot senderSnaps = // query must be sender is equal to uid
+        await messages.where("sender", isEqualTo: uid).get();
+
+    List<Message> messagesList = [];
+
+    for (var snap in receiverSnaps.docs) {
+      messagesList.add(Message(snap));
+    }
+
+    for (var snap in senderSnaps.docs) {
+      messagesList.add(Message(snap));
+    }
+
+    return messagesList.toList();
+  }
+
+  Future sendMessage(data) async {
+    await messages.add(data);
   }
 
   //ajouter un utilisateur dans la base de donnée

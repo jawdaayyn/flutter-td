@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:isspi_bd3/controller/my_firebase_helper.dart';
 import 'package:isspi_bd3/controller/my_permission_photo.dart';
-import 'package:isspi_bd3/mesWidgets/my_animation.dart';
 import 'package:isspi_bd3/mesWidgets/my_bacground.dart';
 import 'package:isspi_bd3/view/my_dashboard.dart';
 import 'package:isspi_bd3/view/my_loading.dart';
@@ -84,92 +83,73 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Padding(
                 padding: EdgeInsets.all(10),
                 child: Column(children: [
-                  //image
-                  MyAnimation(
-                    time: 1,
-                    child: Image.network(
-                        "https://get.wallhere.com/photo/sports-car-vehicle-photography-supercars-yellow-Lamborghini-Lamborghini-Aventador-Canon-California-Lamborghini-Gallardo-sports-car-performance-car-symbolic-flickr-wheel-cars-amazing-auto-tumblr-automobile-rim-series-supercar-socal-canoneos5dmarkiii-automotive-automotivated-davidcoynephotography-land-vehicle-automotive-design-automotive-exterior-race-car-luxury-vehicle-motor-vehicle-automotive-wheel-system-870390.jpg"),
-                  ),
-
                   //champs des mails
 
-                  MyAnimation(
-                    time: 2,
-                    child: TextField(
-                        controller: mail,
-                        decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.amber,
-                            prefixIcon: Icon(Icons.mail),
-                            hintText: "Entrer un mail",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20)))),
-                  ),
+                  TextField(
+                      controller: mail,
+                      decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.amber,
+                          prefixIcon: Icon(Icons.mail),
+                          hintText: "Entrer un mail",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20)))),
 
                   //champs du mot de passe
                   const SizedBox(height: 10),
 
-                  MyAnimation(
-                    time: 3,
-                    child: TextField(
-                        controller: password,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.amber,
-                            prefixIcon: Icon(Icons.lock),
-                            hintText: "Entrer un password",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20)))),
-                  ),
+                  TextField(
+                      controller: password,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.amber,
+                          prefixIcon: Icon(Icons.lock),
+                          hintText: "Entrer un password",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20)))),
                   const SizedBox(height: 10),
 
                   // bouton
-                  MyAnimation(
-                    time: 4,
-                    child: ElevatedButton(
-                        onPressed: () {
-                          MyFirebaseHelper()
-                              .connectFirebase(
-                                  email: mail.text, password: password.text)
-                              .then((value) {
-                            setState(() {
-                              moi = value;
-                            });
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const MyDashBoard()));
-                          }).catchError((onError) {
-                            //afficher un pop
-                            popError();
+                  ElevatedButton(
+                      onPressed: () {
+                        MyFirebaseHelper()
+                            .connectFirebase(
+                                email: mail.text, password: password.text)
+                            .then((value) {
+                          setState(() {
+                            moi = value;
                           });
-                        },
-                        child: Text("Connexion")),
-                  ),
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const MyDashBoard()));
+                        }).catchError((onError) {
+                          //afficher un pop
+                          popError();
+                        });
+                      },
+                      child: Text("Connexion")),
 
-                  MyAnimation(
-                    time: 5,
-                    child: TextButton(
-                        onPressed: () {
-                          MyFirebaseHelper()
-                              .createUserFirebase(
-                                  email: mail.text,
-                                  password: password.text,
-                                  nom: "",
-                                  prenom: "")
-                              .then((value) {
-                            setState(() {
-                              moi = value;
-                            });
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const MyDashBoard()));
+                  TextButton(
+                      onPressed: () {
+                        MyFirebaseHelper()
+                            .createUserFirebase(
+                                email: mail.text,
+                                password: password.text,
+                                nom: "",
+                                prenom: "")
+                            .then((value) {
+                          setState(() {
+                            moi = value;
                           });
-                        },
-                        child: const Text("Inscription")),
-                  ),
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const MyDashBoard()));
+                        });
+                      },
+                      child: const Text("Inscription")),
                 ]))),
       ],
     ) // This trailing comma makes auto-formatting nicer for build methods.

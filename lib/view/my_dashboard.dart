@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:isspi_bd3/mesWidgets/my_bacground.dart';
 import 'package:isspi_bd3/mesWidgets/my_profil.dart';
 import 'package:isspi_bd3/view/loading_map.dart';
-import 'package:isspi_bd3/view/map.dart';
 import 'package:isspi_bd3/view/my_all_users.dart';
 
 class MyDashBoard extends StatefulWidget {

@@ -35,43 +35,52 @@ class _MyAllUsersState extends State<MyAllUsers> {
                     MyUser lesAutres = MyUser(documents[index]);
 
                     return Card(
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      child: ListTile(
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        child: ListTile(
                           leading: CircleAvatar(
                             radius: 80,
                             backgroundImage: NetworkImage(lesAutres.image!),
                           ),
                           title: Text(lesAutres.nom),
                           subtitle: Text(lesAutres.mail),
-                          trailing: IconButton(
-                            icon: const Icon(Icons.heart_broken_outlined),
-                            color: moi.favoris != null &&
-                                    moi.favoris!.contains(lesAutres.uid)
-                                ? Colors.pink
-                                : Colors.grey,
-                            onPressed: () {
-                              if (moi.favoris != null &&
-                                  moi.favoris!.contains(lesAutres.uid)) {
-                                moi.favoris = moi.favoris!
-                                    .where((e) => e != lesAutres.uid)
-                                    .toList();
+                          trailing: Row(
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.heart_broken_outlined),
+                                color: moi.favoris != null &&
+                                        moi.favoris!.contains(lesAutres.uid)
+                                    ? Colors.pink
+                                    : Colors.grey,
+                                onPressed: () {
+                                  if (moi.favoris != null &&
+                                      moi.favoris!.contains(lesAutres.uid)) {
+                                    moi.favoris = moi.favoris!
+                                        .where((e) => e != lesAutres.uid)
+                                        .toList();
 
-                                Map<String, dynamic> data = {
-                                  "FAVORIS": moi.favoris
-                                };
-                                MyFirebaseHelper().updateUser(moi.uid, data);
-                              } else {
-                                Map<String, dynamic> data = {
-                                  "FAVORIS": [...moi.favoris!, lesAutres.uid]
-                                };
-                                MyFirebaseHelper().updateUser(moi.uid, data);
-                                moi.favoris!.add(lesAutres.uid);
-                              }
-                            },
-                          )),
-                    );
+                                    Map<String, dynamic> data = {
+                                      "FAVORIS": moi.favoris
+                                    };
+                                    MyFirebaseHelper()
+                                        .updateUser(moi.uid, data);
+                                  } else {
+                                    Map<String, dynamic> data = {
+                                      "FAVORIS": [
+                                        ...moi.favoris!,
+                                        lesAutres.uid
+                                      ]
+                                    };
+                                    MyFirebaseHelper()
+                                        .updateUser(moi.uid, data);
+                                    moi.favoris!.add(lesAutres.uid);
+                                  }
+                                },
+                              )
+                            ],
+                          ),
+                        ));
                   });
             }
           }
