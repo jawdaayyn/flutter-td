@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:isspi_bd3/controller/my_firebase_helper.dart';
 import 'package:isspi_bd3/globale.dart';
-import 'package:isspi_bd3/model/message.dart';
+//import 'package:isspi_bd3/model/message.dart';
 
 class Messages extends StatefulWidget {
   const Messages(Map<String, String> map, {super.key});
@@ -31,9 +31,12 @@ class _MessagesState extends State<Messages> {
             } else {
               List messages =
                   snap.data!.docs.where((e) => e.id != moi.uid).toList();
-              return Column(children: [
-                const Text("Messages"),
-                /*SingleChildScrollView(
+              return Scaffold(
+                  body: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(children: [
+                        const Text("Messages"),
+                        /*SingleChildScrollView(
                   child: ListView.builder(
                       itemCount: messages.length,
                       itemBuilder: (context, index) {
@@ -59,34 +62,35 @@ class _MessagesState extends State<Messages> {
                         }
                       }),
                 ),
-                TextField(
-                    controller: message,
-                    decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.amber,
-                        icon: const Icon(Icons.send),
-                        hintText: "Envoyer un message",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20)))),
-                const SizedBox(height: 10),
                 */
-                IconButton(
-                    onPressed: () => {
-                          MyFirebaseHelper().sendMessage({
-                            "receiver": moi.receiverId,
-                            "sender": moi.uid,
-                            "content": message.text
-                          }),
-                          messages.add({
-                            "receiver": moi.receiverId,
-                            "sender": moi.uid,
-                            "content": message.text
-                          }),
-                          message.clear()
-                        },
-                    icon: const Icon(Icons.send)),
-                const SizedBox(height: 10),
-              ]);
+
+                        TextField(
+                            controller: message,
+                            decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.amber,
+                                icon: const Icon(Icons.send),
+                                hintText: "Envoyer un message",
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20)))),
+                        const SizedBox(height: 10),
+                        IconButton(
+                            onPressed: () => {
+                                  MyFirebaseHelper().sendMessage({
+                                    "receiver": moi.receiverId,
+                                    "sender": moi.uid,
+                                    "content": message.text
+                                  }),
+                                  messages.add({
+                                    "receiver": moi.receiverId,
+                                    "sender": moi.uid,
+                                    "content": message.text
+                                  }),
+                                  message.clear()
+                                },
+                            icon: const Icon(Icons.send)),
+                        const SizedBox(height: 10),
+                      ])));
             }
           }
         });
