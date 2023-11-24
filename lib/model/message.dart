@@ -4,15 +4,16 @@ class Message {
   late String receiver;
   late String sender;
   late String content;
-  late String messageId;
+  String? messageId;
 
-  Message.empty() {
+  Message.empty({required}) {
     sender = "";
     receiver = "";
     content = "";
     messageId = "";
   }
-  Message(DocumentSnapshot snapshot) {
+
+  Message.fromSnapshot(DocumentSnapshot snapshot) {
     messageId = snapshot.id;
     Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
     sender = data["sender"];

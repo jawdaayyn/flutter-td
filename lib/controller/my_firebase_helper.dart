@@ -56,11 +56,11 @@ class MyFirebaseHelper {
     List<Message> messagesList = [];
 
     for (var snap in receiverSnaps.docs) {
-      messagesList.add(Message(snap));
+      messagesList.add(snap as Message);
     }
 
     for (var snap in senderSnaps.docs) {
-      messagesList.add(Message(snap));
+      messagesList.add(snap as Message);
     }
 
     return messagesList.toList();
