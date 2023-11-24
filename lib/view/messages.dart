@@ -3,22 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:isspi_bd3/controller/my_firebase_helper.dart';
 import 'package:isspi_bd3/globale.dart';
 import 'package:isspi_bd3/model/message.dart';
-import 'package:isspi_bd3/model/my_user.dart';
-import 'package:isspi_bd3/view/my_dashboard.dart';
 
 class Messages extends StatefulWidget {
-  const Messages({super.key});
+  const Messages(Map<String, String> map, {super.key});
 
   @override
   State<Messages> createState() => _MessagesState();
 }
 
 class _MessagesState extends State<Messages> {
- Future<List<Message>> messages = MyFirebaseHelper().getMessages(moi.uid);
+  TextEditingController message = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-        stream: messages,
+        stream: MyFirebaseHelper().messages.snapshots(),
         builder: (context, snap) {
           if (snap.connectionState == ConnectionState.waiting) {
             //temps d'attente lors de la connexion à la base de donnée
@@ -32,13 +31,17 @@ class _MessagesState extends State<Messages> {
             } else {
               List messages =
                   snap.data!.docs.where((e) => e.id != moi.uid).toList();
-              return ListView.builder(
-                  itemCount: messages.length,
-                  itemBuilder: (context, index) {
-                    Message message = Message(messages[index]);
-
-                      return Card(
-                          child: Row(
+              return Column(children: [
+                const Text("Messages"),
+                /*SingleChildScrollView(
+                  child: ListView.builder(
+                      itemCount: messages.length,
+                      itemBuilder: (context, index) {
+                        Message message = Message(messages[index]);
+                        if (message.sender == moi.uid ||
+                            message.receiver == moi.uid) {
+                          return Card(
+                              child: Row(
                             children: [
                               CircleAvatar(
                                 radius: 80,
@@ -47,14 +50,43 @@ class _MessagesState extends State<Messages> {
                               Column(
                                 children: [
                                   Text(message.content),
-                                  Text(message.mail),
                                 ],
                               ),
                             ],
-                          )
-                      )
-
-                  });
+                          ));
+                        } else {
+                          return null;
+                        }
+                      }),
+                ),
+                TextField(
+                    controller: message,
+                    decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.amber,
+                        icon: const Icon(Icons.send),
+                        hintText: "Envoyer un message",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20)))),
+                const SizedBox(height: 10),
+                */
+                IconButton(
+                    onPressed: () => {
+                          MyFirebaseHelper().sendMessage({
+                            "receiver": moi.receiverId,
+                            "sender": moi.uid,
+                            "content": message.text
+                          }),
+                          messages.add({
+                            "receiver": moi.receiverId,
+                            "sender": moi.uid,
+                            "content": message.text
+                          }),
+                          message.clear()
+                        },
+                    icon: const Icon(Icons.send)),
+                const SizedBox(height: 10),
+              ]);
             }
           }
         });

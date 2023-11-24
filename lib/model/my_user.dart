@@ -9,6 +9,7 @@ class MyUser {
   late String prenom;
   String? pseudo;
   List? favoris;
+  String? receiverId;
 
   MyUser.empty() {
     uid = "";
